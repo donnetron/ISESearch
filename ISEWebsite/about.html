@@ -41,11 +41,11 @@
 				<ol>
 					<li>If you are doing securitisation restructuring work  it can be handy to have a chronological diary of all the notices published that can be downloaded quickly and printed for review. On the ISE website you have to download and print each manually, which can be slow if there are many notices.</li>
 					<li>If you are looking at a particular aspect of a securitisation, you can filter your results by keyword to only show notices concerning a topic.</li>
-					<li>You can search for existing notices on a topic to get an idea of they are drafted. For example, to look up examples on how would you report a notice regarding a CMBS restructuring you can search for keywords without knowledge of a securitisation having been restructured.</li>
-					<li>There are probably a few other reasons from an equity listing or just general informational perspective on why it would be useful to search stock exchange notices other than by company.</li>
+					<li>You can search for existing notices on a topic to get an idea of how they are drafted (i.e. precedent finding). For example, to look up examples on how would you report a notice regarding a CMBS restructuring you can search for keywords without knowledge of any specific securitisation having been restructured.</li>
+					<li>There are many other reasons from an equity listing or general informational perspective on why it would be useful to search stock exchange notices other than by company.</li>
 				</ol>
-				<p>Because the ISE website doesn't easily lend itself to the above, these pages are a front-end to a search engine that indexes (and will continue to index) every notice published since January 2003 to create a searchable database of notices that can be downloaded in bulk.</p>
-				<p>This about page summarises how and was designed. If you want to see the <a href="https://github.com/donnetron/ISESearch">source code go here.</a><p>
+				<p>Because the ISE website doesn't easily lend itself to the above, these pages are a front-end to a search engine that indexes every notice published since January 2003 to create a searchable database of notices that can be downloaded in bulk.</p>
+				<p>This about page summarises the programming behind the project. If you want to see the <a href="https://github.com/donnetron/ISESearch">source code go here.</a><p>
 			</div>
 			
 			<div class="blog-post">
@@ -66,9 +66,9 @@
 				<h2 class="blog-post-title">Technologies used</h2>
 				<p>Where possible the whole project made use of existing software libraries and applications to avoid re-inventing the wheel.</p>
 				<h4>The Spider/Crawler</h4>
-				<p>A large part of the Crawler had to be written by me in Java, but where possible I made use of existing libraries, especially when parsing and formatting the notices.</p>
+				<p>A large part of the Crawler had to be written from scratch in Java. Where possible I made use of existing libraries, especially when parsing and formatting the notices.</p>
 				<ul>
-				<li><b><a href="http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html">Java 8</a></b> - programming language I used write the crawler itself</li>
+				<li><b><a href="http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html">Java 8</a></b> - programming language used write the crawler itself</li>
 				<li><b><a href="http://jsoup.org/">JSoup</a></b> - library to download and parse the HTML notices from ISE website and create an index</li>
 				<li><b><a href="http://logging.apache.org/log4j/2.x/">Log4J</a></b> - to debug and log error messages</li>
 				</ul>
@@ -79,7 +79,7 @@
 				<h4>The Website</h4>
 				<p>Probably the most complicated part of the project in terms of getting everything to work together:</p>
 				<ul>
-				<li><b><a href="http://www.lighttpd.net/">Lighttpd</a></b> - as the webserver</li>
+				<li><b><a href="http://www.lighttpd.net/">Lighttpd</a></b>, and eventually <b><a href="http://nginx.org/">Nginx</a></b> - as the webserver and proxy server</li>
 				<li><b><a href="http://php.net/">PHP5</a></b> - as backend to serving notice downloads</li>
 				<li><b><a href="http://wkhtmltopdf.org/">wkhtmltopdf</a></b> - as a converter from HTML to PDF for notice downloads</li>
 				<li><b><a href="https://github.com/evolvingweb/ajax-solr">Ajax-Solr</a></b> - as the foundation interface between the browser and Solr</li>

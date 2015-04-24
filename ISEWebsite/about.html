@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Don's ISE Search Tool - About</title>
+		<!-- syntax highlighter -->
+		<script type="text/javascript" src="libs/google-code-prettify/prettify.js"></script>
+		<link href="libs/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+		
+		<!-- jquery resources -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+		
+		<!-- bootstrap resources -->
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		
+		<!-- page resources -->
+		<script src="js/general.js"></script>
+		
+	</head>
+<body onload="prettyPrint()">
+
+	<div class="container">
+
+	<div class="blog-header">
+		<h1 class="blog-title">About</h1>
+		<p class="lead blog-description">How and why this search tool was made</p>
+	</div>
+
+	<div class="row">
+
+		<div class="col-sm-9 blog-main">
+
+			<div class="blog-post">
+				<h2 class="blog-post-title">Introduction</h2>
+				<p>This is an SFG know-how project.</p>
+				<p>There are a few use cases (from a debt finance and securitisation perspective) why this website is useful:</p>
+				<ol>
+					<li>If you are doing securitisation restructuring work  it can be handy to have a chronological diary of all the notices published that can be downloaded quickly and printed for review. On the ISE website you have to download and print each manually, which can be slow if there are many notices.</li>
+					<li>If you are looking at a particular aspect of a securitisation, you can filter your results by keyword to only show notices concerning a topic.</li>
+					<li>You can search for existing notices on a topic to get an idea of they are drafted. For example, to look up examples on how would you report a notice regarding a CMBS restructuring you can search for keywords without knowledge of a securitisation having been restructured.</li>
+					<li>There are probably a few other reasons from an equity listing or just general informational perspective on why it would be useful to search stock exchange notices other than by company.</li>
+				</ol>
+				<p>Because the ISE website doesn't easily lend itself to the above, these pages are a front-end to a search engine that indexes (and will continue to index) every notice published since January 2003 to create a searchable database of notices that can be downloaded in bulk.</p>
+				<p>This about page summarises how and was designed. If you want to see the <a href="https://github.com/donnetron/ISESearch">source code go here.</a><p>
+			</div>
+			
+			<div class="blog-post">
+				<h2 class="blog-post-title">Overview</h2>
+				<p>The whole project is comprised of three main systems:</p>
+				<ol>
+					<li>The <b>crawler</b>, which is written in Java and periodically trawls the ISE website for notices, downloads them and converts them into a suitable format for indexing in the search engine.</li>
+					<li>The <b>search engine</b>, which takes XML files with details of downloaded notices as the input, and creates an index so that you can send keywords to it and retrieve a set of results which match that keyword.</li>
+					<li>The <b>website</b>, which is a front-end for the search engine and allows someone to search for notices and view and download the results.</li>
+				</ol>
+				<div class="row text-center">
+					<img src="img/overview.png" />
+				</div>
+				<hr>
+			</div>
+
+			<div class="blog-post">
+				<h2 class="blog-post-title">Technologies used</h2>
+				<p>Where possible the whole project made use of existing software libraries and applications to avoid re-inventing the wheel.</p>
+				<h4>The Spider/Crawler</h4>
+				<p>A large part of the Crawler had to be written by me in Java, but where possible I made use of existing libraries, especially when parsing and formatting the notices.</p>
+				<ul>
+				<li><b><a href="http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html">Java 8</a></b> - programming language I used write the crawler itself</li>
+				<li><b><a href="http://jsoup.org/">JSoup</a></b> - library to download and parse the HTML notices from ISE website and create an index</li>
+				<li><b><a href="http://logging.apache.org/log4j/2.x/">Log4J</a></b> - to debug and log error messages</li>
+				</ul>
+				<h4>The Search Engine</h4>
+				<ul>
+					<li><b><a href="http://lucene.apache.org/solr/">Solr 4</a></b> - The  implementation of Apache Lucene</li>
+				</ul>
+				<h4>The Website</h4>
+				<p>Probably the most complicated part of the project in terms of getting everything to work together:</p>
+				<ul>
+				<li><b><a href="http://www.lighttpd.net/">Lighttpd</a></b> - as the webserver</li>
+				<li><b><a href="http://php.net/">PHP5</a></b> - as backend to serving notice downloads</li>
+				<li><b><a href="http://wkhtmltopdf.org/">wkhtmltopdf</a></b> - as a converter from HTML to PDF for notice downloads</li>
+				<li><b><a href="https://github.com/evolvingweb/ajax-solr">Ajax-Solr</a></b> - as the foundation interface between the browser and Solr</li>
+				<li><b><a href="http://jquery.com/">JQuery</a></b> - to add functionality to pages</li>
+				<li><b><a href="http://getbootstrap.com/">Twitter Bootstrap</a></b> - to create the look and feel of the website</li>
+				<li><b><a href="https://bootstrap-datepicker.readthedocs.org/en/release/">Bootstrap datepicker</a></b> - to add easy date picking when filtering by date</li>
+				<li><b><a href="http://momentjs.com/">moment.js</a></b> - to easily parse dates</li>
+				</ul>
+				<h4>The System and development</h4>
+				<ul>
+				<li><b><a href="https://www.debian.org/">Debian</a></b> - as operating system that everything is running on</li>
+				<li><b><a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">Putty</a></b> - SSH client to manage the server and install all of the software used to serve and develop the system</li>
+				<li><b><a href="http://notepad-plus-plus.org/">Notepad++</a></b> - editor used for all the web development</li>
+				<li><b><a href="https://www.editplus.com/">Editplus</a></b> - editor used for the Java development</li>
+				<li><b><a href="http://www.google.com/chrome/">Chrome</a></b> - the brower used to debug the website</li>
+				<li><b><a href="https://github.com/donnetron/ISESearch">GitHub</a></b> - online versioning system
+				<li><b><a href="http://en.wikipedia.org/wiki/Asus_Eee_PC">Asus EEE PC 901</a></b> - The hardware. An old laptop with Intel Atom 1.7Ghz, 2GB ram and a 32GB runcore SSD</li>
+				</ul>
+				<div class="row text-center">
+					<img src="img/EEEPC.jpg" />
+				</div>
+				<hr>
+			</div>
+			
+			<div class="blog-post">
+				<h2 class="blog-post-title">The Crawler</h2>
+				<p>The crawler was the most interesting part of the project as it involved the most "genuine programming" with a fair amount of architectural design and not too many hacks and work-arounds to get things going.</p>
+				<p>The crawler program itself goes to the ISE website, constructs a suitable search for all notices on the website and then saves the results. Because the ISE website makes it possible to easily identify an URL search string presenting a range of all notices for a particular date, we can download each page of results and start to build a local database. Effectively you can save all the result pages which show the company, notice headline, time and date, and notice URL to create an index of every notice published.</p>
+				<p>Once local index of every notice published has been generated, it is then possible to loop through the index and save the content of each notice (based on its unique URL) for analysing. This is formatted in XML so that it can be sent to the search engine for processing.</p>
+				<p>The last step is to enable frequent updating to pull only the last days' worth of notices from the website so that you can continually update the index.</p>
+				<div class="row text-center">
+					<img src="img/crawler.png" />
+				</div>
+				<hr>
+			</div>
+			
+			<div class="blog-post">
+				<h2 class="blog-post-title">The Search Engine</h2>
+				<p>The search engine is an install of <a href="http://lucene.apache.org/solr/">Apache Solr</a> which is a ready made application that indexes the data you have posted to it and presents search data according to a query string sent to it.</p>
+				<p>There is not a lot of thought in setting this up, but you do need to modify the configuration files to expect the sort of data you are posting to it so that it knows what to index.</p>
+				<p>The key lines to add to the Solr conf file are:</p>
+				<pre class="prettyprint">
+	&lt;field name=&quot;UID&quot; type=&quot;string&quot; indexed=&quot;true&quot; stored=&quot;true&quot; required=&quot;true&quot; multiValued=&quot;false&quot; &#x2F;&gt; 
+	&lt;field name=&quot;company&quot; type=&quot;text_general&quot; indexed=&quot;true&quot; stored=&quot;true&quot; &#x2F;&gt;
+	&lt;field name=&quot;datetime&quot; type=&quot;date&quot; indexed=&quot;true&quot; stored=&quot;true&quot; &#x2F;&gt;
+	&lt;field name=&quot;title&quot; type=&quot;text_general&quot; indexed=&quot;true&quot; stored=&quot;true&quot; &#x2F;&gt;
+	&lt;field name=&quot;url&quot; type=&quot;text_general&quot; indexed=&quot;true&quot; stored=&quot;true&quot; &#x2F;&gt;
+	&lt;field name=&quot;notice&quot; type=&quot;text_general&quot; indexed=&quot;true&quot; stored=&quot;true&quot; &#x2F;&gt;
+	&lt;field name=&quot;cachefile&quot; type=&quot;text_general&quot; indexed=&quot;true&quot; stored=&quot;true&quot; &#x2F;&gt;
+
+	&lt;!-- catchall for all other searchable text fields (implemented via copyField below  --&gt;
+	&lt;field name=&quot;text&quot; type=&quot;text_general&quot; indexed=&quot;true&quot; stored=&quot;false&quot; multiValued=&quot;true&quot;&#x2F;&gt;
+
+	&lt;copyField source=&quot;company&quot; dest=&quot;text&quot;&#x2F;&gt;
+	&lt;copyField source=&quot;title&quot; dest=&quot;text&quot;&#x2F;&gt;
+	&lt;copyField source=&quot;notice&quot; dest=&quot;text&quot;&#x2F;&gt;
+	
+	&lt;!-- Field to use to determine and enforce document uniqueness. --&gt;
+	&lt;uniqueKey&gt;UID&lt;&#x2F;uniqueKey&gt;
+				</pre>
+				<h4>Nginx Proxy</h4>
+				<p>To add a basic level of security to Solr, a reverse proxy queries the Solr server on behalf of the person accessing it. This is to acheive a limited set of queries to the server which would prevent someone from sending a malicious command to erase all data from the index.</p>
+
+				<hr>
+			</div>
+			
+			<div class="blog-post">
+				<h2 class="blog-post-title">The Website</h2>
+
+				<p>The website is a heavily modified version of <a href="https://github.com/evolvingweb/ajax-solr">AJAX-Solr</a> which allows for communication between the Solr servcr and the browser without needing page refreshes. For delivering zipped files for downloaded, a PHP backend was used to fetch the cached notices and bundle together for download. The website aspect of the project was the largest amount of work, mainly due to adapting existing systems for presentation and communication with Solr.</p>
+				<hr>
+			</div>
+		</div>
+	</div>
+	
+	</div>
+
+</body>
+
+</html>

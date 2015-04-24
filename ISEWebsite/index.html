@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Don's ISE Search Tool</title>
+		
+		<!-- jquery resources -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+		
+		<!-- bootstrap resources -->
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		
+		<script src="libs/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<link rel="stylesheet" href="libs/bootstrap-datepicker/css/datepicker.css">
+		
+		<!-- history.js resources -->
+		<script src="libs/history.js/scripts/bundled/html4+html5/jquery.history.js"></script>
+		
+		<!-- moment.js resources -->
+		<script src="libs/moment.js/moment.js"></script>
+		
+		<!-- page variables used by various ise-search scripts -->
+		<script src="js/isesearch-globalVars.js"></script>
+		
+		<!-- page resources that are used by new widgets (so need to be pre-loaded before widgets) -->
+		<script src="js/isesearch-messages.js"></script>
+		<script src="js/isesearch-selecter.js"></script>
+		
+		<!-- ajax-solr resources -->
+		<script src="libs/ajax-solr/core/Core.js"></script>
+		<script src="libs/ajax-solr/core/AbstractManager.js"></script>
+		<script src="libs/ajax-solr/core/Parameter.js"></script>
+		<script src="libs/ajax-solr/core/ParameterStore.js"></script>
+		<script src="libs/ajax-solr/core/AbstractWidget.js"></script>
+		<script src="libs/ajax-solr/core/AbstractTextWidget.js"></script>
+		<script src="libs/ajax-solr/core/AbstractFacetWidget.js"></script>
+		<script src="libs/ajax-solr/managers/Manager.jquery.js"></script>
+		
+		<!-- ajax-solr widgets (modified for ise-search) -->
+		<script src="js/widgets/ParameterHistoryStore.js"></script>
+		<script src="js/widgets/AutocompleteTermWidget.js"></script>
+		<script src="js/widgets/PagerWidget.js"></script>
+		<script src="js/widgets/ResultWidget.js"></script>
+		<script src="js/widgets/SubmitWidget.js"></script>
+
+		<!-- new widgets for ise-search -->
+		<script src="js/widgets/SortWidget.js"></script>
+		<script src="js/widgets/CompanySelectorWidget.js"></script>
+		<script src="js/widgets/DateSelectorWidget.js"></script>
+		<script src="js/widgets/SelectWidget.js"></script>
+		<!-- <script src="js/widgets/DebugWidget.js"></script> -->
+		
+		<!-- page resources -->
+		<script src="js/isesearch-advancedSearch.js"></script>
+		<script src="js/isesearch-download.js"></script>
+		<script src="js/isesearch-init.js"></script>	
+		<!-- main page for ise-search (incorporates ajax-solr) -->
+		<script src="js/isesearch-solr.js"></script>
+		<link rel="stylesheet" href="css/isesearch.css">
+		
+	</head>
+	
+	<body>
+
+		<!-- modal for download settings -->
+		<div class="modal fade" id="downloadOptions" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title" id="downloadOptionsLabel">Download options</h4>
+					</div>
+					<div class="modal-body">
+						<p>Download selected notices as:</p>
+						<form role="form" id="downloadOptionForm">
+							<div class="radio"><label><input type="radio" name="optradio" value="zipHTML">Zipped HTML files</label></div>
+							<div class="radio"><label><input type="radio" name="optradio" value="zipPDF">Zipped PDF files</label></div>
+							<div class="radio"><label><input type="radio" name="optradio" value="onePDF">Single PDF file (multiple notices combined)</label></div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" id="saveDownloadOption">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end modal -->
+
+		<!-- modal for download progress bar -->
+		<div class="modal fade" id="downloadProgress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title" id="downloadOptionsLabel">Downloading...</h4>
+					</div>
+					<div class="modal-body">
+						<div class="progress progress-striped active">
+							<div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end Modal -->	
+
+		<!-- top navbar (with search button, download/advanced/settings buttons -->
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<div id="update">Last updated: <span id="updateDatetime"></span></div>
+					<a class="navbar-brand" href="/isesearch">Don's ISE Search</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<!-- left search inputs -->
+					<div class="navbar-form navbar-left" id="search">
+						<!-- input -->
+						<input type="text" class="form-control navbar-search ui-autocomplete-input" placeholder="Search" id="query" autocomplete="off">
+						<!-- search 'magnifying glass' button -->
+						<button type="button" class="btn btn-default" id="submit"><span class="glyphicon glyphicon-search"></span></button>
+					</div>
+					
+					<!-- right settings buttons -->
+					<div class="navbar-form navbar-right">
+						<button type="button" class="btn btn-success" id="download-button"><span class="glyphicon glyphicon-download-alt"></span> Download</button>
+						<button type="button" class="btn btn-warning" id="advanced-nav-button"><span class="glyphicon glyphicon-search"></span> Advanced <span id="advanced-nav-caret" class="dropdown"><span class="caret"></span></span></button>
+						
+						<!-- settings dropdown menu -->
+						<div class="dropdown btn-group">
+							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></button>
+							<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-toggle="modal" data-target="#downloadOptions" id="downloadOptionMenu">Download options</a></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="help.html">Help</a></li>
+								<li role="presentation" class="divider"></li>
+								<li role="presentation"><a role="menuitem" tabindex="-1" href="about.html">About</a></li>
+								<!-- <li role="presentation" class="divider"></li> -->
+								<!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#" id="clearCookies">Clear cookies</a></li> -->
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- container -->
+		</nav>
+		
+		<!-- advanced search navbar (i.e. the bar the slides down if you click the advanced button) -->
+		<div id="advanced-nav" class="advanced-nav">
+			<div class="container">
+				<!-- company narrow search option -->
+				<div id="search-within-company-selector">
+					<div class="row">
+						<div class="form-group checkbox col-xs-12">
+							<label><input id="search-within-company-checkbox" type="checkbox"> Narrow search by company names</label>
+						</div>
+					</div>
+					<fieldset disabled id="search-within-company-fieldset">
+						<div class="row">
+							<div class="form-group col-xs-3">
+								<input type="text" class="form-control col-xs-2 ui-autocomplete-input" id="search-within-company-query" placeholder="Company name" autocomplete="off">
+								<!-- <input type="text" class="form-control navbar-search ui-autocomplete-input" placeholder="Search" id="query" autocomplete="off"> -->
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				
+				<!-- date range search option -->
+				<div class="row" id="search-date-selector">
+					<div class="form-group checkbox col-xs-12">
+						<label><input id="search-date-checkbox" type="checkbox"> Restrict search to dates</label>
+					</div>
+				</div>
+				<fieldset disabled id="search-date-fieldset">
+					<!-- 'from' date input -->
+					<div class="row">
+						<div class="form-group col-xs-3">
+							<input type="text" class="form-control col-xs-2" id="search-from-date" placeholder="From (dd/mm/yyyy)">
+						</div>
+					</div>
+					<!-- 'to' date input -->
+					<div class="row">
+						<div class="form-group col-xs-3">
+							<input type="text" class="form-control " id="search-to-date" placeholder="To (dd/mm/yyyy)">
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<!-- end advanced search navbar -->
+		
+		<!-- results navbar (blue bar showing number of results and badges for search modifiers) -->
+		<div class="results-nav" id="results-nav">
+			<div class="container">
+				<p class="results-nav-text"><span id="results-nav-text"></span>
+					<!-- <span id="search-company-label" class="label label-danger label-search">Company <a href="#" id="search-company-label-remove"><span class="glyphicon glyphicon-remove"></span></a></span>  -->
+					<span id="search-within-company-label" class="label label-success label-search">Company filter<a href="#" id="search-within-company-label-remove"><span class="glyphicon glyphicon-remove"></span></a></span> 
+					<span id="search-date-label" class="label label-warning label-search">Date filter<a href="#" id="search-date-label-remove"><span class="glyphicon glyphicon-remove"></span></a></span>
+				</p>
+			</div>
+		</div>
+		<!-- end results navbar -->
+		
+		<!-- message navbar (pops up to show warnings and alerts) -->
+		<div id="message-nav"></div>
+		<!-- end warning navbar -->
+		
+		<div class="container" id="notices-nav">
+			<!-- header row for results -->
+			<div class="row">
+				<div class="col-xs-1">
+					<a href="#" id="checkAll"><span class="glyphicon glyphicon-unchecked"></span></a>
+				</div>
+				<div class="col-xs-2">
+					<h2 class="ise-heading">Date	<button id="sort_date" type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-sort"></span></button></h2>
+				</div>
+				<div class="col-xs-2">
+					<h2 class="ise-heading">Company	<button id="sort_company" type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-sort"></span></button></h2>
+				</div>
+				<div class="col-xs-7">
+					<h2 class="ise-heading">Notice	<button id="sort_notice" type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-sort"></span></button></h2>
+				</div>
+			</div>
+			<!-- end header row for results -->
+			
+			<!-- results table of notices (delivered after a search so it empty element which is populated by ajax-solr) -->
+			<!-- the actual HTML that is injected for each notice comes from one of the functions in ResultWidget.js -->
+			<div id="docs"></div>
+			<!-- end results table -->
+		</div>
+		
+		<!-- bottom of results, pager for multiple pages of results -->
+		<div class="text-center">
+			<ul class="pagination pagination-lg" id="pager-nav"></ul>
+		</div>
+		<!-- end pager -->
+	</body>
+</html>

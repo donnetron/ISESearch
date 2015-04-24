@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<Configuration>
+	
+	<Appenders>
+		<File name="debug" fileName="0 - Tester_debug.log" append="false">
+			<PatternLayout pattern="%t %-5p %c{2} - %m%n"/>
+		</File>
+
+		<File name="info" fileName="0 - Tester_info.log" append="false">
+			<PatternLayout pattern="%t %-5p %c{2} - %m%n"/>
+		</File>
+
+		<Console name="STDOUT" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+		</Console>
+	</Appenders>
+	
+	<Loggers>
+		<Logger name="ISESpider" level="all"  additivity="false">
+			<AppenderRef ref="debug"/>
+		</Logger>
+		<!-- will be used by any logger that doesn't match a named logger -->
+		<Root level="info">
+			<AppenderRef ref="STDOUT"/>
+		</Root>
+	</Loggers>
+
+</Configuration>

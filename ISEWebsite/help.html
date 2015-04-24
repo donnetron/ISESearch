@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Don's ISE Search Tool - Help</title>
+		
+		<!-- jquery resources -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+		
+		<!-- bootstrap resources -->
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		
+		<script src="libs/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<link rel="stylesheet" href="libs/bootstrap-datepicker/css/datepicker.css">
+
+	</head>
+
+<body>
+
+	<div class="container">
+
+	<div class="blog-header">
+		<h1 class="blog-title">Help</h1>
+		<p class="lead blog-description">How to use Don's ISE Search tool</p>
+	</div>
+
+	<div class="row">
+
+		<div class="col-sm-9 blog-main">
+
+			<div class="blog-post">
+				<h2 class="blog-post-title">Purpose</h2>
+
+				<p>The <a href="http://www.ise.ie">Irish Stock Exchange</a> (ISE) includes notices published by all companies with listed securities in Ireland. For tax reasons, and because Ireland has a relatively cheap and streamlined process in place for listing on an EU regulated market, many of the listed debt securities we work on in SFG are Irish listed.</p>
+				<p>On the Irish Stock Exchange website, it is possible to view all of the <a href="http://www.ise.ie/Market-Data-Announcements/Announcements/">notices</a> published by a company with listed securities. Currently the database as it is presented is searchable by company name only. While somewhat useful, there are a number of 'annoyances' which mean that it can be difficult to find a notice about a particular subject (often a notice headline is misleading or too generic). It is also difficult to download multiple notices for printing without clicking on each one manually.</p>
+				<p>This website has downloaded every single notice published on the Irish Stock Exchange since January 2003 and continues to do so), to index them based on their content so that you can perform a full word search (as you would in Google) and get a better set of results. Alternatively you can search for a keyword, and then filter for a specific company name or by date using the 'Advanced' settings.</p>
+				<p>Finally you are able to download your results in a zip file in PDF or HTML format for printing.</p>
+				<p>You can read about <a href="about.html">how the site was made here.</a></p>
+				<hr>
+			</div>
+			
+			<div class="blog-post">
+				<h2 class="blog-post-title">How to use</h2>
+				<p>Type in a keyword or company name to get all of the notices published that contain that word. There is an autocomplete function which pops up with suggestions. If no autocomplete suggestion comes up there are zero matches.</p>
+				<p>Searches are by default based on "SearchTerm1 <b>OR</b> Searchterm2". So if you search for "Morgan Citi" your results will show all notices with the word "Morgan" <b>or</b> the word "Citi" in them. If you want to find notices with both terms, search for "Morgan <b>AND</b> Citi".
+				<p>From the results displayed, you can click on the link to view the notice directly on the ISE website. There is also a link to a 'cached' version of the notice stored locally in case the ISE website is down.</p>
+				<p>You can use the checkbox to select the notices you want to download or the checkbox at in the column heading to select the all results on a page, all results in total (if multiple pages), or none of the results from a search. Once you have at least one notice selected you can click the download button for a zip file or PDF containing them.</p>
+				<hr>
+			</div>
+			
+			<div class="blog-post">
+				<h2 class="blog-post-title">Limitations</h2>
+				<p>Limited time, experience, and hardware have meant there are a few shortcuts on the website. It's not designed to be robust for mass use.</p>
+				<ul>
+					<li><b>Updates daily only</b> - the website works by scanning the notices published on the Irish Stock Exchange periodically and updating a database. I have set this to complete at the end of each day which means if looking for notices published on the same day they won't be found.</li>
+					<li><b>It's slow (especially downloading PDFs)</b> - it runs on an old laptop in my broom cupboard which means that it won't handle many users at the same time. If downloading PDFs of your search results, the conversion can take a few minutes if there are a lot of files. It is quicker to save the HTML pages.</li>
+					<li><b>It might not be reliable</b> - For the same reason that its slow, there is no telling when the laptop might conk out so it might go down some day.</li>
+					<li><b>You can only download 200 files at a time</b> - this is a self imposed limitation that prevents someone from slowing the system down by downloading thousands of a files. If you needed to download more than 200 you could filter by a date range to do several batches.</li>
+					<li><b>Back-button doesn't work</b> - If you read the <a href="about.html">about page</a> you will see that the site makes use of AJAX to give fast search results without refreshing the page. For this reason you spend most of the time in a single page that updates the content dynamically. Without quite a lot of extra work it is difficult to implement correct use of the back-button on your browser to look at old searches.</li>
+					<li><b>No highlighting</b> - some searches bring up results that you wouldn't think normally match. Usually the keyword is buried somewhere difficult to spot (but it really is there). There might be some way to automatically highlight matches on screen but no time to implement this. Sorry!</li>
+				<hr>
+			</div>
+			
+		</div>
+	</div>
+	
+	</div>
+
+</body>
+</html>

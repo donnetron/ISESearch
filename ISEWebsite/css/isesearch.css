@@ -1,0 +1,147 @@
+/*	
+	ISE page specific CSS changes. Generally set out as they appear in the page (i.e. index.html) from top to bottom.
+	Most CSS is taken from bootstrap, so these are largely modifiers.
+*/
+
+body {
+	margin-top: 50px;
+	padding-top: 2px;
+}
+
+.navbar-form {
+	padding-left: 0;
+}
+
+.navbar-collapse {
+	padding-left: 0;
+}
+
+.navbar-search {
+	width: 350px!important;
+}
+
+.ui-autocomplete {
+	box-shadow:0 0 5px rgba(81,203,238,1)!important;
+	border: 1px solid #ddd!important;
+	margin-top: 10px!important;
+	border-radius: 0 0 5px 5px;
+	position: absolute;
+	cursor: default;
+	z-index: 99999!important;
+}
+
+.ui-menu-item {
+}
+
+.advanced-nav {
+	padding-top: 10px;
+	height: 230px;
+	background-color: #fff;
+}
+
+.results-nav {
+	height: 50px;
+	background-color: #428bca;
+	border-radius: 3px;
+	border: solid 1px darkblue;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+.results-nav-text {
+	color: #fff;
+	line-height: 20px;
+	font-size: 20px;
+	padding: 15px 0;
+}
+
+#message-nav {
+	border-radius: 0 !important;
+	border-right: 0 !important;
+	border-left: 0 !important;
+	line-height: 0px; 
+	text-align: center !important;
+}
+
+a.message-nav-close, a.message-nav-close:hover {
+	line-height: inherit !important;
+	text-decoration: none !important;
+	color: inherit;
+}
+
+.alert {
+	margin-bottom: 2px !important;
+}
+
+.label-search {
+	font-size: 12px;
+	padding-top: 5px;
+}
+
+.label-search a {
+	color: #eaeaea;
+}
+
+.label-search a:hover {
+	color: #fff;
+}
+
+#checkAll {
+	position: absolute;
+	margin: 22px 0 0 -4.5px;
+	font-size: 25px;
+}
+
+.full-range-check {
+	color: red;
+}
+
+.notice-date {
+}
+
+.notice-company {
+}
+
+.notice-title {
+	/* font-weight: bold; */
+	text-decoration: underline;
+}
+
+.notice-url {
+}
+
+.notice-cached {
+	font-weight: bold;
+	color: #7EC946;
+}
+
+.notice-cached:hover {
+	font-weight: bold;
+	color: #3C8F66;
+	text-decoration: none;
+}
+
+.notice-text {
+}
+
+.notice-highlight {
+}
+
+#docs .row {
+	border: 1px solid transparent;
+	padding-top: 5px;
+} 
+
+#docs .selected {
+	background: #f8ffb5;
+	border: 1px solid orange; 
+    border-radius: 3px;
+}
+
+#update {
+    position: absolute;
+    top: 5px;
+	right: 5px;
+	font-size: 10px;
+	z-index: 1;
+}

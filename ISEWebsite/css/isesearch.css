@@ -139,9 +139,6 @@ a.message-nav-close, a.message-nav-close:hover {
 }
 
 #update {
-    position: absolute;
-    top: 5px;
-	right: 5px;
 	font-size: 10px;
 	z-index: 1;
 }

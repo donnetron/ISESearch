@@ -3,3 +3,4 @@ ISECrawler/cache/*
 ISECrawler/conf*
 ISECrawler/data/*
 ISECrawler/logs/*
+ISECrawler/isespider/*.class

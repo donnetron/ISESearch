@@ -4,3 +4,4 @@ ISECrawler/conf*
 ISECrawler/data/*
 ISECrawler/logs/*
 ISECrawler/isespider/*.class
+ISECrawler/scripts/dropbox_uploader.sh

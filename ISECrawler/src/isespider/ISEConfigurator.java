@@ -25,8 +25,8 @@ public class ISEConfigurator {
 														{"lastCacheFile", ""},
 														{"lastNoticeURLCollected", ""},
 														{"lastIndexURLCollected", ""},
-														{"lastIndexDataFile", "data/incomplete/indexdata_0001.xml"},
-														{"lastNoticeDataFile", "data/noticedata_0001.xml"},
+														{"lastIndexDataFile", "data/incomplete/indexdata_0000.xml"},
+														{"lastNoticeDataFile", "data/noticedata_0000.xml"},
 														{"lastUID", "0"},
 														//{"indexPagesCrawled", ""},
 														{"indexSpiderActive", "false" },
@@ -111,14 +111,16 @@ public class ISEConfigurator {
 		String input = "";
 
 		if (beginDate.equals("")) {
-			System.out.print("Search start date (DD/MM/YYYY):");
+			System.out.print("Search start date (DD-MM-YYYY):");
 			input = scanner.nextLine();
+			input = input.replaceAll("/|\.|\\", "-");
 			if (!input.equals("")) { prop.setProperty("searchBeginDate", input); }
 		}
 		
 		if (endDate.equals("")) {
-			System.out.print("Search end date (DD/MM/YYYY):");
+			System.out.print("Search end date (DD-MM-YYYY):");
 			input = scanner.nextLine();
+			input = input.replaceAll("/|\.|\\", "-");
 			if (!input.equals("")) { prop.setProperty("searchEndDate", input); }
 		}
 	}

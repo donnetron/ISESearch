@@ -6,6 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Iterator;
 
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.*;
 
@@ -69,11 +75,16 @@ public class XMLNoticeHelper {
 	static String[] setInputFile(String input) {
 		XMLHelperLogger.debug("input: {}", input);
 		
-		File dir = new File(FilenameUtils.getPath(input));
-		XMLHelperLogger.debug("input dir: {}", dir);
-		
+		File dir = new File(FilenameUtils.getFullPath(input));
+		if (dir == null) { XMLHelperLogger.debug("dir is NULL"); }
+		else { 		XMLHelperLogger.debug("input dir: {}", dir); }
+
+		XMLHelperLogger.debug("WildcardFileFiler: {}", new WildcardFileFilter(FilenameUtils.getName(input).toString()));
 		FilenameFilter filenameFilter = new WildcardFileFilter(FilenameUtils.getName(input));
 		File[] files = dir.listFiles(filenameFilter);
+
+		if (files == null) { XMLHelperLogger.debug("files is NULL"); }
+		else { XMLHelperLogger.debug("files: {}", files.length); }
 
 		String[] paths = new String[files.length];
 		for (int i=0; i<files.length; i++) { paths[i] = files[i].getPath(); }
@@ -85,6 +96,7 @@ public class XMLNoticeHelper {
 
 		return paths;
 	}
+
 
 	static void mergeXMLFiles(String[] input, String output) {
 		XMLHelperLogger.info("Creating file:" + output);
@@ -138,7 +150,7 @@ public class XMLNoticeHelper {
 				//if the globap map of year.xml files does NOT already contain a key for this year, then create a new outputData file object and put it in the map
 				if (!yearFiles.containsKey(year)) {
 					XMLHelperLogger.debug("yearFiles does NOT contain: {}", year);
-					yearFiles.put(year, new BigXMLFileHandler(output + "_" + year + ".xml", "add"));
+					yearFiles.put(year, new BigXMLFileHandler(output + "-" + year + ".xml", "add"));
 				}
 
 				outputData = yearFiles.get(year);
@@ -149,8 +161,8 @@ public class XMLNoticeHelper {
 		}
 		//close all of the year.xml files (write close root element)
 		yearFiles.forEach((year, yearFile) -> yearFile.closeFile());
-
 	}
+
 
 	static void splitXMLFileBySize(String[] input, String output, String fileSize) {
 		XMLHelperLogger.info("Creating file:" + output);
@@ -181,6 +193,7 @@ public class XMLNoticeHelper {
 		}
 		outputData.closeFile();
 	}
+
 
 	static void checkUID(String[] input) {
 		
@@ -227,13 +240,14 @@ public class XMLNoticeHelper {
 		XMLHelperLogger.info("Done (finished at UID: {})", noticeUID);
 	}
 
+
 	static void checkCLI(String[] args) {
 		// create the command line parser
 		CommandLineParser parser = new GnuParser();
 
 		// create the Options
 		Options options = new Options();
-		options.addOption("c", "merge", false, "check sequential notice UID in files");
+		options.addOption("c", "check", false, "check sequential notice UID in files");
 		options.addOption("m", "merge", false, "merge files into one output file");
 		options.addOption("sy", "splityear", false, "split input file by year");
 		options.addOption("sf", "splitfilesize", true, "split input file by filesize in bytes, kB, MB, or GB");
@@ -255,5 +269,6 @@ public class XMLNoticeHelper {
 			XMLHelperLogger.catching(e);
 		}
 	}
+
 
 }

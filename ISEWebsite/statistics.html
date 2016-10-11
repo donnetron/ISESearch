@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Don's ISE Search - Big Data Statistics</title>
+		<!-- Chart.js -->
+		<!-- <script src="libs/Chart.min.js"></script> -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
+		<!-- <script src="libs/inViewport.js"></script> -->
+		
+		<!-- jquery resources -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+		
+		<!-- bootstrap resources -->
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+		<!-- page resources -->
+		<link rel="stylesheet" href="css/isesearch.css">
+		<script src="js/isesearch-statistics.js"></script>
+		<script src="libs/fireworks.js"></script>
+
+				
+	</head>
+<body>
+
+	<div class="container">
+
+	<div class="blog-header">
+		<h1 class="blog-title">Big Data Statistics</h1>
+	</div>
+
+	<div class="row" style="width: 90%">			
+		<div class="col-sm-12 blog-main">
+
+			<div class="jumbotron">
+				<h1><span class="totalNotices"></span><small class="x-small"> notices published</small></h1>
+				<h1><div class="spacer"><small class="x-small">by </small><span id="totalCompanies"></span><small class="x-small"> companies</small></h1>
+				<!-- http://SOLR_URL.com/select?q=*:*&group=true&group.field=company_str&group.ngroups=true&rows=0&wt=json -->
+			</div>
+
+			<div class="blog-post">
+				<h2 class="blog-post-title">Most notices by company</h2>
+				<div class="chart"><canvas id="totalCompaniesChart"></canvas></div>
+				<p>This pie chart shows the top 15 companies, with the most notices published on the Irish Stock Exchange.</p>
+				<p>The largest by far is the Irish Stock Exchange itself, which publishes all notices related to new listings and other information that applies to the exchange or all listings generally.</p>
+				<p>After the Irish Stock Exchange, the next most prolific publishers of RIS notices are large corporates. A securitisation vehicle will not typcially publish notices nearly as frequently, however where the securitised asset is a business or includes loans for large managed properties (e.g. a WBS or CMBS) there is a likelihood of more notices being published in times of stress where the price of the bonds may be affected due to actions taken with respect to the underlying assets.</p>
+				<!-- http://SOLR_URL.com/select?q=*:*&facet=true&facet.field=company_str&facet.sort=count&facet.limit=15&rows=0&wt=json -->
+			</div>
+			
+			<div class="blog-post">
+				<h2 class="blog-post-title">Yearly growth</h2>
+				<div class="chart"><canvas id="yearChart"></canvas></div>
+				<p>This chart shows the total number of notices published per year. Since the data became available in 2003, the number has grown year on year up to 2008, following a strong decline which might be as a result of a reduced number of listings during and following the financial crisis.</p>
+				<p>The line chart that is overlaid shows the total number of notices published up to (but excluding) the current month of the year.</p>
+				<!-- http://SOLR_URL.com//select?q=*:*&facet=true&facet.date=datetime&facet.date.start=2003-01-01T00:00:00.100Z&facet.date.end=NOW/YEAR%2B1YEAR&facet.date.gap=%2B1YEAR&rows=0&wt=json -->
+			</div>
+
+			<div class="blog-post">
+				<h2 class="blog-post-title">Daytime busyness</h2>
+				<div class="chart"><canvas id="hourChart"></canvas></div>
+				<p>This chart shows the average number of notices publiches per hour. That is, a total number of <span class="totalNotices highlight bold">.totalNotices</span> notices have been published since 1 January 2003 (being <span class="totalNoticeDays highlight bold">.totalNoticeDays</span> days on which the exchange was open for business). This results in an average of <span class="averageNoticesPerDay highlight bold">.averageNoticesPerDay</span> being published on a business day.</p>
+
+				<p>The early 7am spike is probably accounted for by a backlog of notices that were submitted for publication close to, or after the close of business the day before. Day spikes might be as a result of batch publication, or otherwise just as an indication of people's productivity; there seems to be a natural lull over lunchtime!</p>
+				<!-- http://SOLR_URL.com/select?q=*:*&facet=true&facet.field=hour&facet.sort=hour+asc&rows=0&wt=json -->
+			</div>
+
+			<div class="blog-post">
+				<h2 class="blog-post-title">Weekly trends</h2>
+				<div class="chart"><canvas id="dayChart"></canvas></div>
+				<p>This radar chart shows the average number of notices published per day. The spread is relatively even apart from a slight dip on Monday. This is probably due to the fact that Ireland has 5 bank holidays per year which fall on a Monday which the chart doesn't take account of.</p>
+				<!-- http://SOLR_URL.com//select?q=datetime:*&facet=true&facet.date=datetime&facet.date.start=2003-01-01T00:00:00.100Z&facet.date.end=NOW/MONTH&facet.date.gap=%2B1DAY&rows=0&wt=json -->
+			</div>
+
+			<div class="blog-post">
+				<h2 class="blog-post-title">Seasonal variations</h2>
+				<div class="chart"><canvas id="monthChart"></canvas></div>
+				<p>This bar chart shows the average number of notices published in a month for a given year. The variation is minimal, and there appears to be no real seasonal peaks.
+				<!-- http://SOLR_URL.com//select?q=*:*&facet=true&facet.date=datetime&facet.date.start=2003-01-01T00:00:00.100Z&facet.date.end=NOW/MONTH&facet.date.gap=%2B1MONTH&rows=0&wt=json -->
+			</div>
+			
+			<div class="blog-post">
+				<h2 class="blog-post-title">Booby prize <a href="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2003:028:0043:0044:en:PDF">(Commission Directive 2003/12/EC)</a></h2>
+				<div class="jumbotron" id="hallOfShame">
+					<div class="hallOfShame">
+						<div id="hos1">[company 1]<span class="small">[date 1]</span></div>
+						<div id="hos2">[company 2]<span class="small">[date 2]</span></div>
+						<div id="hos3">[company 3]<span class="small">[date 3]</span></div>
+					</div>
+				</div>
+				<p>The above companies were the last three who didn't proof read their RIS notices! Notices published by a company with listed securities are published due to a requirement under the EU Market Abuse Directive, and related legislation concerning defintions of what consititutes inside information and market manipulation.</p>
+				<p>At some point in 2006, a notice was published (based on a form document, scheduled to an agreement), that referred to <a href="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2003:028:0043:0044:en:PDF">Commission Directive 2003/12/EC</a>, rather than <a href="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2003:339:0070:0072:EN:PDF">Commission Directive 2003/12<strong>4</strong>/EC</a>. The small typo has resulted in a slew of <span id="totalEU12Notices" class="highlight bold">#totalEU12Notices</span> further notices published by companies (or their advisers) recycling old docucments, which has continued for a decade. Of course, following the implementation of 
+				<!-- http://SOLR_URL.com/solr/select?q=%222003/12/EC%22&rows=3&sort=datetime%20desc -->
+			</div>
+
+		</div>
+	</div>
+	
+	</div>
+
+</body>
+
+</html>

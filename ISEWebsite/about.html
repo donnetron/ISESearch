@@ -63,48 +63,6 @@
 			</div>
 
 			<div class="blog-post">
-				<h2 class="blog-post-title">Technologies used</h2>
-				<p>Where possible the whole project made use of existing software libraries and applications to avoid re-inventing the wheel.</p>
-				<h4>The Spider/Crawler</h4>
-				<p>A large part of the Crawler had to be written from scratch in Java. Where possible I made use of existing libraries, especially when parsing and formatting the notices.</p>
-				<ul>
-				<li><b><a href="http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html">Java 8</a></b> - programming language used write the crawler itself</li>
-				<li><b><a href="http://jsoup.org/">JSoup</a></b> - library to download and parse the HTML notices from ISE website and create an index</li>
-				<li><b><a href="http://logging.apache.org/log4j/2.x/">Log4J</a></b> - to debug and log error messages</li>
-				</ul>
-				<h4>The Search Engine</h4>
-				<ul>
-					<li><b><a href="http://lucene.apache.org/solr/">Solr 4</a></b> - The  implementation of Apache Lucene</li>
-				</ul>
-				<h4>The Website</h4>
-				<p>Probably the most complicated part of the project in terms of getting everything to work together:</p>
-				<ul>
-				<li><b><a href="http://www.lighttpd.net/">Lighttpd</a></b>, and eventually <b><a href="http://nginx.org/">Nginx</a></b> - as the webserver and proxy server</li>
-				<li><b><a href="http://php.net/">PHP5</a></b> - as backend to serving notice downloads</li>
-				<li><b><a href="http://wkhtmltopdf.org/">wkhtmltopdf</a></b> - as a converter from HTML to PDF for notice downloads</li>
-				<li><b><a href="https://github.com/evolvingweb/ajax-solr">Ajax-Solr</a></b> - as the foundation interface between the browser and Solr</li>
-				<li><b><a href="http://jquery.com/">JQuery</a></b> - to add functionality to pages</li>
-				<li><b><a href="http://getbootstrap.com/">Twitter Bootstrap</a></b> - to create the look and feel of the website</li>
-				<li><b><a href="https://bootstrap-datepicker.readthedocs.org/en/release/">Bootstrap datepicker</a></b> - to add easy date picking when filtering by date</li>
-				<li><b><a href="http://momentjs.com/">moment.js</a></b> - to easily parse dates</li>
-				</ul>
-				<h4>The System and development</h4>
-				<ul>
-				<li><b><a href="https://www.debian.org/">Debian</a></b> - as operating system that everything is running on</li>
-				<li><b><a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">Putty</a></b> - SSH client to manage the server and install all of the software used to serve and develop the system</li>
-				<li><b><a href="http://notepad-plus-plus.org/">Notepad++</a></b> - editor used for all the web development</li>
-				<li><b><a href="https://www.editplus.com/">Editplus</a></b> - editor used for the Java development</li>
-				<li><b><a href="http://www.google.com/chrome/">Chrome</a></b> - the brower used to debug the website</li>
-				<li><b><a href="https://github.com/donnetron/ISESearch">GitHub</a></b> - online versioning system
-				<li><b><a href="http://en.wikipedia.org/wiki/Asus_Eee_PC">Asus EEE PC 901</a></b> - The hardware. An old laptop with Intel Atom 1.7Ghz, 2GB ram and a 32GB runcore SSD</li>
-				</ul>
-				<div class="row text-center">
-					<img src="img/EEEPC.jpg" />
-				</div>
-				<hr>
-			</div>
-			
-			<div class="blog-post">
 				<h2 class="blog-post-title">The Crawler</h2>
 				<p>The crawler was the most interesting part of the project as it involved the most "genuine programming" with a fair amount of architectural design and not too many hacks and work-arounds to get things going.</p>
 				<p>The crawler program itself goes to the ISE website, constructs a suitable search for all notices on the website and then saves the results. Because the ISE website makes it possible to easily identify an URL search string presenting a range of all notices for a particular date, we can download each page of results and start to build a local database. Effectively you can save all the result pages which show the company, notice headline, time and date, and notice URL to create an index of every notice published.</p>
@@ -152,6 +110,55 @@
 				<p>The website is a heavily modified version of <a href="https://github.com/evolvingweb/ajax-solr">AJAX-Solr</a> which allows for communication between the Solr servcr and the browser without needing page refreshes. For delivering zipped files for downloaded, a PHP backend was used to fetch the cached notices and bundle together for download. The website aspect of the project was the largest amount of work, mainly due to adapting existing systems for presentation and communication with Solr.</p>
 				<hr>
 			</div>
+
+			<div class="blog-post">
+				<h2 class="blog-post-title">Technologies used</h2>
+				<p>Where possible the whole project made use of existing software libraries and applications to avoid re-inventing the wheel.</p>
+				<h4>The Spider/Crawler</h4>
+				<p>A large part of the Crawler had to be written from scratch in Java. Where possible I made use of existing libraries, especially when parsing and formatting the notices.</p>
+				<ul>
+				<li><b><a href="http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html">Java 8</a></b> - programming language used write the crawler itself</li>
+				<li><b><a href="http://jsoup.org/">JSoup</a></b> - library to download and parse the HTML notices from ISE website and create an index</li>
+				<li><b><a href="http://logging.apache.org/log4j/2.x/">Log4J</a></b> - to debug and log error messages</li>
+				</ul>
+				<h4>The Search Engine</h4>
+				<ul>
+					<li><b><a href="http://lucene.apache.org/solr/">Solr 4</a></b> - The  implementation of Apache Lucene</li>
+				</ul>
+				<h4>The Website</h4>
+				<p>Probably the most complicated part of the project in terms of getting everything to work together:</p>
+				<ul>
+				<li><b><a href="http://www.lighttpd.net/">Lighttpd</a></b>, and eventually <b><a href="http://nginx.org/">Nginx</a></b> - as the webserver and proxy server</li>
+				<li><b><a href="http://php.net/">PHP5</a></b> - as backend to serving notice downloads</li>
+				<li><b><a href="http://wkhtmltopdf.org/">wkhtmltopdf</a></b> - as a converter from HTML to PDF for notice downloads</li>
+				<li><b><a href="https://github.com/evolvingweb/ajax-solr">Ajax-Solr</a></b> - as the foundation interface between the browser and Solr</li>
+				<li><b><a href="http://jquery.com/">JQuery</a></b> - to add functionality to pages</li>
+				<li><b><a href="http://getbootstrap.com/">Twitter Bootstrap</a></b> - to create the look and feel of the website</li>
+				<li><b><a href="https://bootstrap-datepicker.readthedocs.org/en/release/">Bootstrap datepicker</a></b> - to add easy date picking when filtering by date</li>
+				<li><b><a href="http://momentjs.com/">moment.js</a></b> - to easily parse dates</li>
+				</ul>
+				<h4>The System and development</h4>
+				<ul>
+				<li><b><a href="https://www.debian.org/">Debian</a></b> - as operating system that everything is running on</li>
+				<li><b><a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">Putty</a></b> - SSH client to manage the server and install all of the software used to serve and develop the system</li>
+				<li><b><a href="http://notepad-plus-plus.org/">Notepad++</a></b> - editor used for all the web development</li>
+				<li><b><a href="https://www.editplus.com/">Editplus</a></b> - editor used for the Java development</li>
+				<li><b><a href="http://www.google.com/chrome/">Chrome</a></b> - the brower used to debug the website</li>
+				<li><b><a href="https://github.com/donnetron/ISESearch">GitHub</a></b> - online versioning system
+				<li><b><a href="http://en.wikipedia.org/wiki/Asus_Eee_PC">Asus EEE PC 901</a></b> - The hardware. An old laptop with Intel Atom 1.7Ghz, 2GB ram and a 32GB runcore SSD</li>
+				</ul>
+				<div class="row text-center">
+					<img src="img/EEEPC.jpg" />
+				</div>
+				<ul>
+				<li><b><a href="https://www.raspberrypi.org/">Raspberry Pi</a></b> and <b><a href="https://www.raspbian.org/">Rasbian</a></b> - as a second development test machine</li>
+				</ul>
+				<div class="row text-center">
+					<img src="img/rpi.jpg" />
+				</div>
+				<hr>
+			</div>
+
 		</div>
 	</div>
 	

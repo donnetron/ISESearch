@@ -8,7 +8,7 @@
 	$(function() {
 		//manager object to make requests to the solr server
 		Manager = new AjaxSolr.Manager({
-			solrUrl: 'http://127.0.0.0:8983/solr/'
+			solrUrl: 'http://debian-vm:8080/solr/'
 	});
 
 

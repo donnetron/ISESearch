@@ -142,3 +142,62 @@ a.message-nav-close, a.message-nav-close:hover {
 	font-size: 10px;
 	z-index: 1;
 }
+
+small .x-small {
+	font-size: 10px;
+}
+
+.spacer {
+    margin: 0 0 0 10%;
+}
+
+.hallOfShame {
+	text-align: center;
+}
+
+#hos1 {
+	font-size: 50px;
+		color: rgba(0, 0, 0, 1);
+}
+
+#hos1 .small {
+	font-size: 25px;
+	color: rgba(0, 0, 0, 0.6);
+}
+
+#hos2 {
+	font-size: 35px;
+	color: rgba(96, 99, 209, 1);
+}
+
+#hos2 .small {
+	font-size: 20px;
+	color: rgba(96, 99, 209, 0.6);
+}
+
+#hos3 {
+	font-size: 25px;
+	color: rgba(170, 128, 216, 1);
+}
+
+#hos3 .small {
+	font-size: 15px;
+	color: rgba(170, 128, 216, 0.6);
+}
+
+.highlight {
+	background: #ffff00;
+	/* text-decoration: underline; */
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.chart {
+	margin: 20px 0 20px 0;
+}
+
+.block-post h2 {
+	margin-top: 40px;
+}

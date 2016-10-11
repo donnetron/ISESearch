@@ -2,7 +2,7 @@
 //contains a number of setup items to adjust the display when the page is loaded for the first time
 $(function() {				//this line is syntactic sugar for $(document).ready(function() {
 
-	$("#updateDatetime").load("cache/updated.txt");
+	$('#updateDatetime').load('cache/updated.txt');
 
 	$('#query').focus();	//put cursor in the query box
 

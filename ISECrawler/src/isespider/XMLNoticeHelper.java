@@ -44,6 +44,9 @@ public class XMLNoticeHelper {
 		XMLHelperLogger.info("XML Notice Helper started");
 		XMLHelperLogger.info("=========================");
 		
+		XMLHelperLogger.info("/!\\ CAUTION: WRAP INPUT FILE ARGUMENT IN QUOTES TO PRESERVE WILDCARDS /!\\");
+
+
 		//check command line arguments to see if we are merging or splitting a file(s). Check for input/output files
 		checkCLI(args);
 		
@@ -60,7 +63,20 @@ public class XMLNoticeHelper {
 			splitXMLFileByYear(inputFile, outputFile);
 		}
 		else if (!splitFileSize.equals("0")) {
-			splitXMLFileBySize(inputFile, outputFile, splitFileSize);
+			String splitFileSizeBytes = splitFileSize;
+			//approximations to convert to KB/MB/GB to avoid converting from string->long->string
+			if (splitFileSize.toUpperCase().endsWith("KB")) {
+				splitFileSizeBytes = splitFileSize.substring(0,splitFileSize.length()-2).concat("000");
+			}
+			else if (splitFileSize.toUpperCase().endsWith("MB")) {
+				splitFileSizeBytes = splitFileSize.substring(0,splitFileSize.length()-2).concat("000000");
+			}
+			else if (splitFileSize.toUpperCase().endsWith("GB")) {
+				splitFileSizeBytes = splitFileSize.substring(0,splitFileSize.length()-2).concat("000000000");
+			}
+			XMLHelperLogger.info("Split filesize: {} ({} bytes)", splitFileSize, splitFileSizeBytes);
+
+			splitXMLFileBySize(inputFile, outputFile, splitFileSizeBytes);
 		}
 		else if (checkUID == true) {
 			checkUID(inputFile);

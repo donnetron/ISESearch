@@ -1,7 +1,7 @@
 //jQuery document ready function
 $(function($) {
 
-	//$('*').removeClass("highlight");
+	$('*').removeClass("highlight");
 
 	$.getJSON('cache/statistics.json', function(data) { 
 		
@@ -77,11 +77,11 @@ function setTotalNotices(id_notices, id_companies, input) {
 *  COMPANIES PIE  *
 ******************/
 function createPieChart(chart_id, input) {
-	console.log("creating pie chart");
+	//console.log("creating pie chart");
 
-	console.log(chart_id);
-	console.log(input);
-	console.log("-----");
+	//console.log(chart_id);
+	//console.log(input);
+	//console.log("-----");
 
 	var data = {
 		labels: input.labels,
@@ -130,11 +130,11 @@ function createPieChart(chart_id, input) {
 *  HOURS LINE     *
 ******************/
 function createLineChart(chart_id, input) {
-	console.log("creating line chart");
+	//console.log("creating line chart");
 
-	console.log(chart_id);
-	console.log(input);
-	console.log("-----");
+	//console.log(chart_id);
+	//console.log(input);
+	//console.log("-----");
 
 	var data = {
 		labels: input.labels,
@@ -176,11 +176,11 @@ function createLineChart(chart_id, input) {
 *  DAYS RADAR     *
 ******************/
 function createRadarChart(chart_id, input) {
-	console.log("creating radar chart");
+	//console.log("creating radar chart");
 
-	console.log(chart_id);
-	console.log(input);
-	console.log("-----");
+	//console.log(chart_id);
+	//console.log(input);
+	//console.log("-----");
 
 	var data = {
 		//labels: input.labels.slice(1,6),
@@ -229,11 +229,11 @@ function createRadarChart(chart_id, input) {
 *  MONTH BAR      *
 ******************/
 function createBarChart(chart_id, input) {
-	console.log("creating bar chart");
+	//console.log("creating bar chart");
 
-	console.log(chart_id);
-	console.log(input);
-	console.log("-----");
+	//console.log(chart_id);
+	//console.log(input);
+	//console.log("-----");
 
 	var data = {
 		labels: input.labels,
@@ -274,12 +274,12 @@ function createBarChart(chart_id, input) {
 *  YEAR BAR/LINE  *
 ******************/
 function createBarLineChart(chart_id, barInput, lineInput) {
-	console.log("creating bar/line chart");
+	//console.log("creating bar/line chart");
 
-	console.log(chart_id);
-	console.log(barInput);
-	console.log(lineInput);
-	console.log("-----");
+	//console.log(chart_id);
+	//console.log(barInput);
+	//console.log(lineInput);
+	//console.log("-----");
 
 	var data = {
 		labels: barInput.labels,
@@ -332,15 +332,15 @@ function getTotalNotices(json) {
 
 	$.each(json, function(key, val) {
 		if (key == 'matches') { 
-			//console.log("key: " + key + ", value: " + val);
+			////console.log("key: " + key + ", value: " + val);
 			totalNotices.notices = val;
-			//console.log(totalNotices.notices);
+			////console.log(totalNotices.notices);
 		}
 		
 		if (key == 'ngroups') { 
-			//console.log("key: " + key + ", value: " + val);
+			////console.log("key: " + key + ", value: " + val);
 			totalNotices.companies = val;
-			//console.log(totalNotices.companies);
+			////console.log(totalNotices.companies);
 		}
 	});
 
@@ -357,7 +357,7 @@ function getCompanyValues(json) {
 	//switch to iterate by 2 steps to allow for "[label, value, label, value, etc...]" in JSON construct
 	var label = true;
 	$.each(json, function(key, val) {
-		//console.log("key: " + key + ", value: " + val);
+		////console.log("key: " + key + ", value: " + val);
 		if (label == true) {
 			result.labels.push(val);
 			label = false;
@@ -368,8 +368,8 @@ function getCompanyValues(json) {
 		}
 	});
 
-	console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
-	//console.log(result);
+	//console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
+	////console.log(result);
 	return result;
 }
 
@@ -387,7 +387,7 @@ function getHourValues(json) {
 	
 	var label = true;
 	$.each(json, function(key, val) {
-		//console.log("key: " + key + ", value: " + val);
+		////console.log("key: " + key + ", value: " + val);
 		if (label == true) {
 			index = parseInt(val);
 			label = false
@@ -401,8 +401,8 @@ function getHourValues(json) {
 	result.labels = result.labels.slice(6,20);
 	result.data = result.data.slice(6,20);
 
-	console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
-	//console.log(result);
+	//console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
+	////console.log(result);
 	return result;
 }
 
@@ -417,7 +417,7 @@ function getAveHourValues(json, totalNonZeroNoticeDays) {
 	
 	var label = true;
 	$.each(json, function(key, val) {
-		//console.log("key: " + key + ", value: " + val);
+		////console.log("key: " + key + ", value: " + val);
 		if (label == true) {
 			index = parseInt(val);
 			label = false
@@ -435,8 +435,8 @@ function getAveHourValues(json, totalNonZeroNoticeDays) {
 		result.data[i] = Math.round(result.data[i]/totalNonZeroNoticeDays);
 	}
 
-	console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
-	//console.log(result);
+	//console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
+	////console.log(result);
 	return result;
 }
 
@@ -453,8 +453,8 @@ function getDayValues(json) {
 		}
 	});
 
-	console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
-	//console.log(result);
+	//console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
+	////console.log(result);
 	return result;
 }
 
@@ -493,8 +493,8 @@ function getAveDayNotices(json) {
 		result.data[i] = Math.round(result.data[i]/dayCount[i]);
 	}
 
-	console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
-	//console.log(result);
+	//console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
+	////console.log(result);
 	return result;
 }
 
@@ -510,8 +510,8 @@ function getNoticeDays(resultObject) {
 		}
 	}
 	
-	console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
-	//console.log(result);
+	//console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
+	////console.log(result);
 	return noticeDayCount;
 }
 
@@ -527,8 +527,8 @@ function getZeroNoticeDays(resultObject) {
 		}
 	}
 	
-	console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
-	//console.log(result);
+	//console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
+	////console.log(result);
 	return result;
 }
 
@@ -550,14 +550,14 @@ function getMonthValues(json) {
 			var currentMonth = parseInt(getDatetimeMonth(key));
 
 			if (currentYear != year && !isNaN(currentYear)) { 
-				//console.log("Year: " + currentYear);
+				////console.log("Year: " + currentYear);
 				yearCount++; 
 				year = currentYear; 
 			}
 			
-			//console.log("Month: " + currentMonth);
+			////console.log("Month: " + currentMonth);
 			result.data[currentMonth-1] = result.data[currentMonth-1] + val;
-			//console.log("Total: " + result.data[currentMonth-1]);
+			////console.log("Total: " + result.data[currentMonth-1]);
 		}
 	});
 
@@ -566,15 +566,15 @@ function getMonthValues(json) {
 	for (i=0; i<12; i++) {
 		if (i => Date.getMonth()-1) { 
 			denominator = yearCount-1; 
-			console.log(denominator)
+			//console.log(denominator)
 		}
 		else { denominator = yearCount; }
 		
 		result.data[i] = Math.round(result.data[i]/denominator);
 	}
 
-	console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
-	//console.log(result);
+	//console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
+	////console.log(result);
 	return result;
 }
 
@@ -592,8 +592,8 @@ function getYearValues(json) {
 		}
 	});
 
-	console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
-	//console.log(result);
+	//console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
+	////console.log(result);
 	return result;
 }
 
@@ -628,8 +628,8 @@ function getYearValuesToMonth(json, month) {
 		}
 	});
 
-	console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
-	//console.log(result);
+	//console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
+	////console.log(result);
 	return result;
 }
 
@@ -664,8 +664,8 @@ function getDirective12Notices(json) {
 		}
 	});
 
-	console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
-	console.log(result);
+	//console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/) + "()");
+	//console.log(result);
 	return result;
 }
 

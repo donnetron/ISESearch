@@ -30,7 +30,7 @@ $(function($) {
 		//create a radar chart with AVERAGE notices on each day of the week (mon - fri)
 		//var dayNotices = getDayValues(data.statistics.dayNotices.facet_counts.facet_dates.datetime);
 		var aveDayNotices = getAveDayNotices(data.statistics.dayNotices.facet_counts.facet_dates.datetime);
-		$('#dayChart').waypoint(createRadarChart('#dayChart', aveDayNotices));
+		createRadarChart('#dayChart', aveDayNotices);
 
 		//create a line chart with AVERAGE notices per hour
 		//var hourNotices = getHourValues(data.statistics.hourNotices.facet_counts.facet_fields.hour);

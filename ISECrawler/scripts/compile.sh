@@ -6,4 +6,5 @@ echo "--- Running compile.sh ---"
 
 cd $BASE_DIR
 rm -f isespider/*.class
-javac -d . src/isespider/ISECrawler.java src/isespider/XMLNoticeHelper.java $*
+javac -d . src/isespider/ISECrawler.java $*
+javac -d . src/isespider/XMLNoticeHelper.java $*

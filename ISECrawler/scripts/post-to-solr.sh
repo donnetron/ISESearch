@@ -13,14 +13,14 @@ if [ "$COUNT" -ge 0 ] ; then
 	echo Posting $COUNT files...
 	#post all the xml files in datadir to solr
 	for f in ${DATA_FILES[@]}; do
-		echo Posting file $DATA_DIR/$f to $SOLR_URL
-		echo curl $SOLR_URL --data-binary @$DATA_DIR/$f -H 'Content-type:application/xml'
-		curl $SOLR_URL --data-binary @$DATA_DIR/$f -H 'Content-type:application/xml'
+		echo Posting file $DATA_DIR/$f to $SOLR_URL/update
+		echo curl $SOLR_URL/update --data-binary @$DATA_DIR/$f -H 'Content-type:application/xml'
+		curl $SOLR_URL/update --data-binary @$DATA_DIR/$f -H 'Content-type:application/xml'
 	done
 	
 	#send the commit command to SOLR to make sure all the changes are flushed and visible
-	echo curl "$SOLR_URL?softCommit=true"
-	curl "$SOLR_URL?softCommit=true"
+	echo curl "$SOLR_URL/update?softCommit=true"
+	curl "$SOLR_URL/update?softCommit=true"
 	
 	echo COMMITTED FILES TO SOLR
 	echo ------------------------------

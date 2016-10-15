@@ -1,5 +1,5 @@
 #!/bin/bash
-source var-config.sh
+source /home/don/ISESearch/ISECrawler/scripts/var-config.sh
 
 echo "--- Running update.sh ---"
 #echo "--- SCRIPTS MUST BE RUN FROM WITHIN SCRIPTS DIRECTORY TO INCLUDE var-config.sh ---"
@@ -10,9 +10,12 @@ echo "--- Running update.sh ---"
 #4. if posted directory has more than 10 meg of data, zip it as noticedata001.zip and put it in the backup dir
 
 cd $BASE_DIR
+pwd
 
 #run the crawler
-java isespider.ISECrawler -u -n
+echo "java isespider.ISECrawler -u -n"
+/usr/bin/java -version
+/usr/bin/java -cp .:lib/* isespider.ISECrawler -u -n
 echo "------------------------------"
 
 #set vars to check .xml file results of crawler
@@ -24,8 +27,8 @@ if [ "$COUNT" -ge 0 ] ; then
 	echo Posting $COUNT files...
 	#post all the xml files in datadir to solr
 	for f in ${DATA_FILES[@]}; do
-		echo Posting file $DATA_DIR/$f to $SOLR_URL
-		curl $SOLR_URL --data-binary @$DATA_DIR/$f -H 'Content-type:application/xml'
+		echo Posting file $DATA_DIR/$f to $SOLR_URL/update
+		curl $SOLR_URL/update --data-binary @$DATA_DIR/$f -H 'Content-type:application/xml'
 	done
 	
 	echo ------------------------------
@@ -35,8 +38,9 @@ if [ "$COUNT" -ge 0 ] ; then
 	echo $(date) > cache/updated.txt
 
 	#send the commit command to SOLR to make sure all the changes are flushed and visible
-	curl "$SOLR_URL?softCommit=true"
+	curl "$SOLR_URL/update?softCommit=true"
 	
+	echo
 	echo COMMITTED FILES TO SOLR
 	echo ------------------------------
 
@@ -50,6 +54,13 @@ if [ "$COUNT" -ge 0 ] ; then
 	
 	echo MOVED FILES
 	echo ------------------------------
+	echo
+
+	echo ------------------------------
+	echo UPDATING STATISTICS
+	echo ------------------------------
+	
+	./scripts/statistics.sh
 
 fi
 echo DONE

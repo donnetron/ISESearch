@@ -19,7 +19,8 @@
 		<!-- will be used by any logger that doesn't match a named logger -->
 		<Root level="all">
 			<!-- UNCOMMENT BELOW LINE IF YOU WANT TO LOG DEBUG MESSAGES IN DEBUG.LOG -->
-			<!-- <AppenderRef ref="debug" level="all"/> -->
+			<!-- <AppenderRef ref="debug" level="all"/>  -->
+
 			<AppenderRef ref="info" level="info"/>
 			<AppenderRef ref="STDOUT" level="info"/>
 		</Root>

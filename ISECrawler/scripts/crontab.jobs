@@ -1,1 +1,1 @@
-30 22 * * 1-5 update.sh > /dev/null && backup.sh > /home/don/ISESpider/ISECrawler/logs/backup.log
+30 22 * * 1-5 /home/don/ISESpider/ISECrawler/logs/update.sh > /home/don/ISESpider/ISECrawler/logs/update.log && /home/don/ISESpider/ISECrawler/logs/backup.sh > /home/don/ISESpider/ISECrawler/logs/backup.log

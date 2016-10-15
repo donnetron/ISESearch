@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #absolute path to ISECrawler file
-BASE_DIR=/home/don/ISESearch/ISECrawler
+BASE_DIR=/home/user/ISESearch/ISECrawler
 #URL to solr server
 SOLR_URL=http://localhost:8983/solr
 

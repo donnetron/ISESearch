@@ -194,10 +194,19 @@ small .x-small {
 	font-weight: bold;
 }
 
+/*
 .chart {
 	margin: 20px 0 20px 0;
+	height: 500px;
+	width: 500px;
 }
 
+canvas {
+	margin: 20px 0 20px 0;
+	height: 500px;
+	width: 500px;
+}
+*/
 .block-post h2 {
 	margin-top: 40px;
 }

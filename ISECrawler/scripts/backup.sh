@@ -1,5 +1,5 @@
 #!/bin/bash
-source var-config.sh
+source /home/don/ISESearch/ISECrawler/scripts/var-config.sh
 
 echo "--- Running backup.sh ---"
 # echo --- SCRIPTS MUST BE RUN FROM WITHIN SCRIPTS DIRECTORY TO INCLUDE var-config.sh ---
@@ -14,6 +14,8 @@ cd $BASE_DIR
 
 #if tomorrow is the first of the month (today is the last day of the month), then do an incremental merge/zip/upload
 if [ $(date --date='tomorrow' +%d) -eq 1 ] ; then
+	echo "Last day of month: performing backup..."
+	
 	if [ -f "$BACKUP_XML_ZIP" ] ; then
 		echo 7z e "$BACKUP_XML_ZIP" -o"$BACKUP_DIR"
 		7z e "$BACKUP_XML_ZIP" -o"$BACKUP_DIR"
@@ -22,11 +24,14 @@ if [ $(date --date='tomorrow' +%d) -eq 1 ] ; then
 		mv "$BACKUP_XML_FILE" "$POSTED_DIR"/0000.xml
 	fi
 	
-	echo java isespider.XMLNoticeHelper -m -i \""$POSTED_DIR"/*.xml\" -o \""$BACKUP_XML_FILE"\"
-	java isespider.XMLNoticeHelper -m -i \""$POSTED_DIR"/*.xml\" -o \""$BACKUP_XML_FILE"\"
+	echo /usr/bin/java -cp .:lib/* isespider.XMLNoticeHelper -m -i \""$POSTED_DIR"/*.xml\" -o \""$BACKUP_XML_FILE"\"
+	/usr/bin/java -cp .:lib/* isespider.XMLNoticeHelper -m -i \""$POSTED_DIR"/*.xml\" -o \""$BACKUP_XML_FILE"\"
 
-	echo rm -f "$POSTED_DIR"/*
-	rm -f "$POSTED_DIR"/*
+	#echo rm -f "$POSTED_DIR"/*
+	#rm -f "$POSTED_DIR"/*
+
+	echo mv "$POSTED_DIR"/* "$POSTED_DIR"/temp_backup
+	mv "$POSTED_DIR"/* "$POSTED_DIR"/temp_backup
 
 	# first zip up the XML file in a new 7z file, then delete the XML file
 	echo 7z a "$BACKUP_XML_ZIP" "$BACKUP_XML_FILE"*
@@ -53,5 +58,8 @@ if [ $(date --date='tomorrow' +%d) -eq 1 ] ; then
 	#upload to dropox (relies on dropbox uploader setup: https://github.com/andreafabrizi/Dropbox-Uploader which needs to be setup first)
 	$SCRIPT_DIR/dropbox_uploader.sh upload "$BACKUP_XML_ZIP" $DROPBOX_XML_PATH
 	$SCRIPT_DIR/dropbox_uploader.sh upload "$BACKUP_CACHE_ZIP" $DROPBOX_CACHE_PATH
+	
+	else 
+		echo "Not last day of month: no backup performed"
 fi
 echo DONE

@@ -7,13 +7,11 @@ $(function($) {
 		
 		//get jumbotron info
 		var totalNotices = getTotalNotices(data.statistics.totalNotices.grouped.company_str);
-		setTotalNotices('.totalNotices', '#totalCompanies', totalNotices);
 
-		//create a pie chart with top 20 companies by number of notices published
+		//data for a pie chart with top 20 companies by number of notices published
 		var companyNotices = getCompanyValues(data.statistics.companyNotices.facet_counts.facet_fields.company_str);
-		createPieChart('#totalCompaniesChart', companyNotices);
 
-		//create a bar chart showing total notices per year 
+		//data for a bar chart showing total notices per year 
 		//super impose a line chart showing total notices as at time of month
 		var yearNotices = getYearValues(data.statistics.yearNotices.facet_counts.facet_dates.datetime);
 	
@@ -21,26 +19,29 @@ $(function($) {
 		var lastMonth = new Date().getMonth();
 	
 		var yearNoticesToMonth = getYearValuesToMonth(data.statistics.monthNotices.facet_counts.facet_dates.datetime, lastMonth);
-		createBarLineChart('#yearChart', yearNotices, yearNoticesToMonth);
 
-		//create a filled line chart showing the average notices per month
+		//data for a filled line chart showing the average notices per month
 		var monthNotices = getMonthValues(data.statistics.monthNotices.facet_counts.facet_dates.datetime);
-		createBarChart('#monthChart', monthNotices);
 		
-		//create a radar chart with AVERAGE notices on each day of the week (mon - fri)
+		//data for a radar chart with AVERAGE notices on each day of the week (mon - fri)
 		//var dayNotices = getDayValues(data.statistics.dayNotices.facet_counts.facet_dates.datetime);
 		var aveDayNotices = getAveDayNotices(data.statistics.dayNotices.facet_counts.facet_dates.datetime);
-		createRadarChart('#dayChart', aveDayNotices);
 
-		//create a line chart with AVERAGE notices per hour
+		//data for a line chart with AVERAGE notices per hour
 		//var hourNotices = getHourValues(data.statistics.hourNotices.facet_counts.facet_fields.hour);
 		var aveHourNotices = getAveHourValues(data.statistics.hourNotices.facet_counts.facet_fields.hour, aveDayNotices.totalNonZeroNoticeDays);
-		createLineChart('#hourChart', aveHourNotices);
 
 		var directive12Notices = getDirective12Notices(data.statistics.directive12Notices.response);
-
 		$('.totalNoticeDays').html(aveDayNotices.totalNonZeroNoticeDays.toLocaleString('en'));
 		$('.averageNoticesPerDay').html(Math.round(totalNotices.notices/aveDayNotices.totalNonZeroNoticeDays).toLocaleString('en'));
+
+		//create each of the charts
+		setTotalNotices('.totalNotices', '#totalCompanies', totalNotices);
+		createPieChart('#totalCompaniesChart', companyNotices);
+		createBarLineChart('#yearChart', yearNotices, yearNoticesToMonth);
+		createLineChart('#hourChart', aveHourNotices);
+		createRadarChart('#dayChart', aveDayNotices);
+		createBarChart('#monthChart', monthNotices);
 
 		//hall of shame below
 		$('#hos1').html(directive12Notices.mostRecent[0].name +
@@ -53,11 +54,12 @@ $(function($) {
 			' <span class="small">(on ' + getDatetimeDate(directive12Notices.mostRecent[2].datetime) + ')</span>');
 
 		$('#totalEU12Notices').html(directive12Notices.total);
-
 		$('#hallOfShame').fireworks();
 
+	//end $.getJSON	
 	});
 
+//end $(function($)
 });
 
 
@@ -106,6 +108,12 @@ function createPieChart(chart_id, input) {
 	};
 
 	var options = {
+		responsive: true,
+//		deferred: {           // enabled by default
+//			xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+//			yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+//			delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+//		},
 		legend: {
 			display: true,
 			position: 'right',
@@ -152,6 +160,12 @@ function createLineChart(chart_id, input) {
 	};
 
 	var options = {
+		responsive: true,
+		deferred: {           // enabled by default
+			xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+			yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+			delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+		},
 		legend: {
 			display: false,
 			position: 'top',
@@ -199,19 +213,23 @@ function createRadarChart(chart_id, input) {
 	};
 
 	var options = {
+		responsive: true,
+		deferred: {           // enabled by default
+			xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+			yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+			delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+		},
 		legend: {
 			display: false,
 		},
-		options: {
-			scale: {
-				lineArc: true,
-				reverse: true,
-				ticks: {
-					beginAtZero: true,
-					min: 70,
-					max: 110
-				}
-			}
+		scale: {
+		//	lineArc: true,
+		//	reverse: true,
+		//	ticks: {
+		//		beginAtZero: true,
+		//		min: 70,
+		//		max: 110
+		//	}
 		}
 	};
 
@@ -247,6 +265,12 @@ function createBarChart(chart_id, input) {
 	};
 
 	var options = {
+		responsive: true,
+		deferred: {           // enabled by default
+			xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+			yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+			delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+		},
 		legend: {
 			display: false,
 		},
@@ -300,6 +324,12 @@ function createBarLineChart(chart_id, barInput, lineInput) {
 	};
 
 	var options = {
+		responsive: true,
+		deferred: {           // enabled by default
+			xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+			yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+			delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+		},
 		legend: {
 			display: false,
 		}

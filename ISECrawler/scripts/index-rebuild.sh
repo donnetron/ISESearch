@@ -22,8 +22,8 @@ echo 7z x -y -o$INDEX_DIR/unmerged/ backup/noticedata\*.7z
 echo /usr/bin/java -cp .:lib/* isespider.XMLNoticeHelper -m -i \"$INDEX_DIR/unmerged/*.xml\" -o \"$INDEX_DIR/merged/merged.xml\"
 /usr/bin/java -cp .:lib/* isespider.XMLNoticeHelper -m -i \"$INDEX_DIR/unmerged/*.xml\" -o \"$INDEX_DIR/merged/merged.xml\"
 
-echo /usr/bin/java -cp .:lib/* isespider.XMLNoticeHelper -sf \"$INDEX_DIR/merged/*.xml\" -o \"$INDEX_DIR/index-rebuild.xml\"
-/usr/bin/java -cp .:lib/* isespider.XMLNoticeHelper -i \"$INDEX_DIR/merged/*.xml\" -sf 1,048,576 -o \"$INDEX_DIR/index-rebuild.xml\"
+echo /usr/bin/java -cp .:lib/* isespider.XMLNoticeHelper -i \"$INDEX_DIR/merged/*.xml\" -sf 1048576 -o \"$INDEX_DIR/index-rebuild.xml\"
+/usr/bin/java -cp .:lib/* isespider.XMLNoticeHelper -i \"$INDEX_DIR/merged/*.xml\" -sf 1048576 -o \"$INDEX_DIR/index-rebuild.xml\"
 
 # delete all documents from the solr index
 curl $SOLR_URL/update --data '<delete><query>*:*</query></delete>' -H 'Content-type:text/xml; charset=utf-8'
@@ -44,8 +44,8 @@ if [ "$COUNT" -ge 0 ] ; then
 	done
 	
 	#send the commit command to SOLR to make sure all the changes are flushed and visible
-	echo curl "$SOLR_URL?softCommit=true"
-	curl "$SOLR_URL?softCommit=true"
+	echo curl "$SOLR_URL/update?softCommit=true"
+	curl "$SOLR_URL/update?softCommit=true"
 	
 	echo COMMITTED FILES TO SOLR
 	echo ------------------------------
@@ -54,7 +54,7 @@ if [ "$COUNT" -ge 0 ] ; then
 	echo UPDATING STATISTICS
 	echo ------------------------------
 	
-	./$SCRIPT_DIR/statistics.sh
+	$SCRIPT_DIR/statistics.sh
 
 fi
 echo DONE

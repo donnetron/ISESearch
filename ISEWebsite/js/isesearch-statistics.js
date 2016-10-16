@@ -593,8 +593,10 @@ function getMonthValues(json) {
 
 	var denominator = 1;
 
+	var today = new Date();
+
 	for (i=0; i<12; i++) {
-		if (i => Date.getMonth()-1) { 
+		if (i >= today.getMonth()-1) { 
 			denominator = yearCount-1; 
 			//console.log(denominator)
 		}

@@ -63,3 +63,13 @@ if [ $(date --date='tomorrow' +%d) -eq 1 ] ; then
 		echo "Not last day of month: no backup performed"
 fi
 echo DONE
+
+
+# full backup from comaned line
+#
+# cd cache
+# for f in */; do 7z a ${f%/}.7z ./$f*; done
+# mv *.7z ../backup
+#
+#full import from command line
+# for f in *.7z; do 7z x $f -o${f%.7z}/; done

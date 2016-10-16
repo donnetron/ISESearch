@@ -113,14 +113,14 @@ public class ISEConfigurator {
 		if (beginDate.equals("")) {
 			System.out.print("Search start date (DD-MM-YYYY):");
 			input = scanner.nextLine();
-			input = input.replaceAll("/|\\.|\\", "-");
+			input = input.replaceAll("/|\\.|\\\\", "-");
 			if (!input.equals("")) { prop.setProperty("searchBeginDate", input); }
 		}
 		
 		if (endDate.equals("")) {
 			System.out.print("Search end date (DD-MM-YYYY):");
 			input = scanner.nextLine();
-			input = input.replaceAll("/|\\.|\\", "-");
+			input = input.replaceAll("/|\\.|\\\\", "-");
 			if (!input.equals("")) { prop.setProperty("searchEndDate", input); }
 		}
 	}
